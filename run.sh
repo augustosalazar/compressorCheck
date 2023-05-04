@@ -3,7 +3,7 @@
 # second parameters is group id
 #!/bin/bash
 
-declare -a fileList=("text1.txt" "text2.txt" "text3.txt")
+declare -a fileList=("text1.txt" "text2.txt" "text3.txt" "text4.txt" "text5.txt")
 
 for fileName in ${fileList[@]}; do
    cp -f $fileName $1
@@ -31,5 +31,5 @@ for fileName in ${fileList[@]}; do
     rm -f $fileName
 done
 
-cp g$2.txt ../
+cp -f g$2.txt ../
 cd ..
