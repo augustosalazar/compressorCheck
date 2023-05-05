@@ -31,7 +31,7 @@ for fileName in ${fileList[@]}; do
     rm -f descomprimido-elmejorprofesor.txt
     mpirun -n 3 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName} >> g$2.txt
     mpirun -n 3 --allow-run-as-root –-oversubscribe python3 descompresorp.py  >> g$2.txt
-    mpirun -n 3 --allow-run-as-root –-oversubscribe python3 verificadorp.py ${fileName} >> g$2.txt
+    python3 verificador.py ${fileName} >> g$2.txt
     sizeOriginal="$(wc -c <${fileName})"
     sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
     sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
@@ -44,7 +44,7 @@ for fileName in ${fileList[@]}; do
     rm -f descomprimido-elmejorprofesor.txt
     mpirun -n 5 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName} >> g$2.txt
     mpirun -n 5 --allow-run-as-root –-oversubscribe python3 descompresorp.py  >> g$2.txt
-    mpirun -n 5 --allow-run-as-root –-oversubscribe python3 verificadorp.py ${fileName} >> g$2.txt
+    python3 verificador.py ${fileName} >> g$2.txt
     sizeOriginal="$(wc -c <${fileName})"
     sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
     sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
@@ -57,7 +57,7 @@ for fileName in ${fileList[@]}; do
     rm -f descomprimido-elmejorprofesor.txt
     mpirun -n 10 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName} >> g$2.txt
     mpirun -n 10 --allow-run-as-root –-oversubscribe python3 descompresorp.py  >> g$2.txt
-    mpirun -n 10 --allow-run-as-root –-oversubscribe python3 verificadorp.py ${fileName} >> g$2.txt
+    python3 verificador.py ${fileName} >> g$2.txt
     sizeOriginal="$(wc -c <${fileName})"
     sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
     sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
