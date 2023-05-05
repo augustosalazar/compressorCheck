@@ -16,56 +16,41 @@ for fileName in ${fileList[@]}; do
     echo $fileName >> g$2.txt
     rm -f comprimido.elmejorprofesor
     rm -f descomprimido-elmejorprofesor.txt
-    python3 compresor.py ${fileName} >> g$2.txt
-    python3 descompresor.py  >> g$2.txt
-    python3 verificador.py ${fileName} >> g$2.txt
+    ct=$(python3 compresor.py ${fileName})
+    dt=$(python3 descompresor.py)
+    v=$(python3 verificador.py ${fileName})
     sizeOriginal="$(wc -c <${fileName})"
     sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
     sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
     diffOriginal=`expr $sizeOriginal - $sizedDecompressed`
     temp=`expr $sizeCompressed  \* 100`
     rate=`expr $temp / $sizeOriginal`
-    echo "Original size ${sizeOriginal} compressed ${sizeCompressed} decompressed ${sizedDecompressed}  rate ${rate}% diff ${diffOriginal}" >> g$2.txt
+    
+    rm -f comprimido.elmejorprofesor
+    rm -f descomprimido-elmejorprofesor.txt
+    ctp3=$(mpirun -n 3 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName})
+    dtp3=$(mpirun -n 3 --allow-run-as-root –-oversubscribe python3 descompresorp.py)
+    vp=$(python3 verificador.py ${fileName})
+    sizeOriginal="$(wc -c <${fileName})"
+    sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
+    sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
+    diffOriginalp3=`expr $sizeOriginal - $sizedDecompressed`
+    temp=`expr $sizeCompressed  \* 100`
+    ratep3=`expr $temp / $sizeOriginal`
 
     rm -f comprimido.elmejorprofesor
     rm -f descomprimido-elmejorprofesor.txt
-    mpirun -n 3 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName} >> g$2.txt
-    mpirun -n 3 --allow-run-as-root –-oversubscribe python3 descompresorp.py  >> g$2.txt
-    python3 verificador.py ${fileName} >> g$2.txt
+    ctp10=$(mpirun -n 10 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName})
+    dtp10=$(mpirun -n 10 --allow-run-as-root –-oversubscribe python3 descompresorp.py)
+    vp=$(python3 verificador.py ${fileName})
     sizeOriginal="$(wc -c <${fileName})"
     sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
     sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
-    diffOriginal=`expr $sizeOriginal - $sizedDecompressed`
+    diffOriginalp10=`expr $sizeOriginal - $sizedDecompressed`
     temp=`expr $sizeCompressed  \* 100`
-    rate=`expr $temp / $sizeOriginal`
-    echo "Original size ${sizeOriginal} compressed ${sizeCompressed} decompressed ${sizedDecompressed}  rate ${rate}% diff ${diffOriginal}" >> g$2.txt
-
-    rm -f comprimido.elmejorprofesor
-    rm -f descomprimido-elmejorprofesor.txt
-    mpirun -n 5 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName} >> g$2.txt
-    mpirun -n 5 --allow-run-as-root –-oversubscribe python3 descompresorp.py  >> g$2.txt
-    python3 verificador.py ${fileName} >> g$2.txt
-    sizeOriginal="$(wc -c <${fileName})"
-    sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
-    sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
-    diffOriginal=`expr $sizeOriginal - $sizedDecompressed`
-    temp=`expr $sizeCompressed  \* 100`
-    rate=`expr $temp / $sizeOriginal`
-    echo "Original size ${sizeOriginal} compressed ${sizeCompressed} decompressed ${sizedDecompressed}  rate ${rate}% diff ${diffOriginal}" >> g$2.txt
-
-    rm -f comprimido.elmejorprofesor
-    rm -f descomprimido-elmejorprofesor.txt
-    mpirun -n 10 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName} >> g$2.txt
-    mpirun -n 10 --allow-run-as-root –-oversubscribe python3 descompresorp.py  >> g$2.txt
-    python3 verificador.py ${fileName} >> g$2.txt
-    sizeOriginal="$(wc -c <${fileName})"
-    sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
-    sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
-    diffOriginal=`expr $sizeOriginal - $sizedDecompressed`
-    temp=`expr $sizeCompressed  \* 100`
-    rate=`expr $temp / $sizeOriginal`
-    echo "Original size ${sizeOriginal} compressed ${sizeCompressed} decompressed ${sizedDecompressed}  rate ${rate}% diff ${diffOriginal}" >> g$2.txt
-
+    ratep10=`expr $temp / $sizeOriginal`
+    
+    echo "ct ${ct} ctp3 ${ctp3} ctp10 ${ctp10} rate ${rate} ratep3 ${ratep10} ratep3 ${ratep10} diff ${diffOriginal}" diffp3 ${diffOriginalp3}" diffp10 ${diffOriginalp10}">> g$2.txt
 
     rm -f $fileName
 done
