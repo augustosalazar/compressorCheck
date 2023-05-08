@@ -17,8 +17,8 @@ for fileName in ${fileList[@]}; do
     rm -f comprimido.elmejorprofesor
     rm -f descomprimido-elmejorprofesor.txt
     python3 compresor.py ${fileName} >> g$2.txt
-    python3 descompresor.py  >> g$2.txt
-    python3 verificador.py ${fileName} >> g$2.txt
+    python3 descompresor.py comprimido.elmejorprofesor >> g$2.txt
+    python3 verificador.py ${fileName} descomprimido-elmejorprofesor.txt >> g$2.txt
     sizeBiblia="$(wc -c <${fileName})"
     sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
     sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
