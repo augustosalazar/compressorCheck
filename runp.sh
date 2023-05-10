@@ -32,8 +32,8 @@ for fileName in ${fileList[@]}; do
     #continuamos con el paralelo con 3 procesos
     rm -f comprimidop.elmejorprofesor
     rm -f descomprimidop-elmejorprofesor.txt
-    ctp3=$(mpirun -n 3 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName})
-    dtp3=$(mpirun -n 3 --allow-run-as-root –-oversubscribe python3 descompresorp.py comprimidop.elmejorprofesor)
+    ctp3=$(mpirun -n 3 -oversubscribe --allow-run-as-root  python3 compresorp.py ${fileName})
+    dtp3=$(mpirun -n 3 -oversubscribe --allow-run-as-root  python3 descompresorp.py comprimidop.elmejorprofesor)
     vp=$(python3 verificador.py ${fileName} descomprimidop-elmejorprofesor.txt)
     sizeCompressed="$(wc -c <comprimidop.elmejorprofesor)"
     sizedDecompressed="$(wc -c <descomprimidop-elmejorprofesor.txt)"
@@ -44,8 +44,8 @@ for fileName in ${fileList[@]}; do
     #ahora con el paralelo con 10 procesos
     rm -f comprimidop.elmejorprofesor
     rm -f descomprimidop-elmejorprofesor.txt
-    ctp10=$(mpirun -n 10 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName})
-    dtp10=$(mpirun -n 10 --allow-run-as-root –-oversubscribe python3 descompresorp.py comprimidop.elmejorprofesor)
+    ctp10=$(mpirun -n 10 -oversubscribe --allow-run-as-root python3 compresorp.py ${fileName})
+    dtp10=$(mpirun -n 10 -oversubscribe --allow-run-as-root  python3 descompresorp.py comprimidop.elmejorprofesor)
     vp=$(python3 verificador.py ${fileName} descomprimidop-elmejorprofesor.txt)
     sizeCompressed="$(wc -c <comprimidop.elmejorprofesor)"
     sizedDecompressed="$(wc -c <descomprimidop-elmejorprofesor.txt)"
@@ -56,9 +56,9 @@ for fileName in ${fileList[@]}; do
     #finalizamos verificando la compatibilidad entre versiones secuenciales y paralelas (con 4 procesos)
     rm -f comprimidop.elmejorprofesor
     rm -f descomprimidop-elmejorprofesor.txt
-    ctp_sanity=$(mpirun -n 4 --allow-run-as-root –-oversubscribe python3 compresorp.py ${fileName})
+    ctp_sanity=$(mpirun -n 4 -oversubscribe --allow-run-as-root  python3 compresorp.py ${fileName})
     dt_sanity=$(python3 descompresor.py comprimidop.elmejorprofesor)
-    dtp_sanity=$(mpirun -n 4 --allow-run-as-root –-oversubscribe python3 descompresorp.py comprimido.elmejorprofesor)
+    dtp_sanity=$(mpirun -n 4 -oversubscribe --allow-run-as-root  python3 descompresorp.py comprimido.elmejorprofesor)
     vp_sanity=$(python3 verificador.py descomprimido-elmejorprofesor.txt descomprimidop-elmejorprofesor.txt)
     sizedDecompressed="$(wc -c <descomprimidop-elmejorprofesor.txt)"
     diffOriginal_sanity=`expr $sizeOriginal - $sizedDecompressed`
