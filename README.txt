@@ -19,6 +19,5 @@ bash runp.sh LZW_Compressor 2
 
 To install MPI:
 sudo apt-get update -y
-sudo apt-get install -y libopenmpi-dev
-sudo apt-get install python3-dev
+sudo apt-get install -y libopenmpi-dev python3-dev python3-pip
 python3 -m pip install mpi4py

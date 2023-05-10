@@ -10,10 +10,15 @@ for fileName in ${fileList[@]}; do
 done
 
 cd $1
-rm -rf  g$2.txt
+
+a1=$1
+a2=$2
+outputFileName=g${a2}_${a1}.txt
+
+rm -rf  ${outputFileName}
 for fileName in ${fileList[@]}; do
     echo $fileName
-    echo $fileName >> g$2.txt
+    echo $fileName >>${outputFileName}
 
     sizeOriginal="$(wc -c <${fileName})"
 
@@ -62,7 +67,7 @@ for fileName in ${fileList[@]}; do
     vp_sanity=$(python3 verificador.py descomprimido-elmejorprofesor.txt descomprimidop-elmejorprofesor.txt)
     sizedDecompressed="$(wc -c <descomprimidop-elmejorprofesor.txt)"
     diffOriginal_sanity=`expr $sizeOriginal - $sizedDecompressed`
-    echo "sanity check ${vp_sanity} ${diffOriginal_sanity}" >> g$2.txt
+    echo "sanity check ${vp_sanity} ${diffOriginal_sanity}" >> ${outputFileName}
 
 
     rm -f comprimido.elmejorprofesor
@@ -70,10 +75,15 @@ for fileName in ${fileList[@]}; do
     rm -f comprimidop.elmejorprofesor
     rm -f descomprimidop-elmejorprofesor.txt
 
-    echo "ct ${ct} ctp3 ${ctp3} ctp10 ${ctp10} rate ${rate} ratep3 ${ratep10} ratep3 ${ratep10} diff ${diffOriginal}" diffp3 ${diffOriginalp3}" diffp10 ${diffOriginalp10}">> g$2.txt
+    echo "ct ${ct} ctp3 ${ctp3} ctp10 ${ctp10} rate ${rate} ratep3 ${ratep10} ratep3 ${ratep10} diff ${diffOriginal}" diffp3 ${diffOriginalp3}" diffp10 ${diffOriginalp10}">> ${outputFileName}
 
     rm -f $fileName
 done
 
-cp -f g$2.txt ../
+rm -f comprimido.elmejorprofesor
+rm -f descomprimido-elmejorprofesor.txt
+rm -f comprimidop.elmejorprofesor
+rm -f descomprimidop-elmejorprofesor.txt
+cp -f ${outputFileName} ../
+rm -rf ${outputFileName}
 cd ..
