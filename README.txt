@@ -16,6 +16,8 @@ For example, in case that group # 2 has a repository called LZW_Compressor:
 
 bash runp.sh LZW_Compressor 2
 
+To execute using docker:
+docker run --rm -it --name mpicont -v "$(pwd)":/app --workdir=/app augustosalazar/un_mpi_image:v4 bash runp.sh basicTest 0
 
 To install MPI:
 sudo apt-get update -y
