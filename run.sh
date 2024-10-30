@@ -18,14 +18,14 @@ rm -rf  ${outputFileName}
 for fileName in ${fileList[@]}; do
     echo $fileName
     echo $fileName >> ${outputFileName}
-    rm -f comprimido.elmejorprofesor
-    rm -f descomprimido-elmejorprofesor.txt
+    rm -f comprimido.ec2
+    rm -f descomprimido-ec2.txt
     python3 compresor.py ${fileName} >>  ${outputFileName}
-    python3 descompresor.py comprimido.elmejorprofesor >>  ${outputFileName}
-    python3 verificador.py ${fileName} descomprimido-elmejorprofesor.txt >>  ${outputFileName}
+    python3 descompresor.py comprimido.ec2 >>  ${outputFileName}
+    python3 verificador.py ${fileName} descomprimido-ec2.txt >>  ${outputFileName}
     sizeBiblia="$(wc -c <${fileName})"
-    sizeCompressed="$(wc -c <comprimido.elmejorprofesor)"
-    sizedDecompressed="$(wc -c <descomprimido-elmejorprofesor.txt)"
+    sizeCompressed="$(wc -c <comprimido.ec2)"
+    sizedDecompressed="$(wc -c <descomprimido-ec2.txt)"
     echo "Original size ${sizeBiblia} compressed ${sizeCompressed} decompressed ${sizedDecompressed}" >>  ${outputFileName}
     diffOriginal=`expr $sizeBiblia - $sizedDecompressed`
     temp=`expr $sizeCompressed  \* 100`
@@ -35,8 +35,8 @@ for fileName in ${fileList[@]}; do
     rm -f $fileName
 done
 
-rm -f comprimido.elmejorprofesor
-rm -f descomprimido-elmejorprofesor.txt
+rm -f comprimido.ec2
+rm -f descomprimido-ec2.txt
 cp -f  ${outputFileName} ../
 rm -rf  ${outputFileName}
 cd ..
