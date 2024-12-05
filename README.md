@@ -34,8 +34,8 @@ rm -f descomprimido-ec2.txt
 rm -f descomprimidop-ec2.txt
 
 Simple verify 202430    
-python3 compresor.py text1.txt
-python3 descompresor.py comprimido.ec2
-python3 verificador.py text1.txt descomprimido-ec2.txt
-docker run --rm -it --name mpicont -v "$(pwd)":/app --workdir=/app augustosalazar/un_mpi_image:v4 mpirun -n 3 -oversubscribe --allow-run-as-root python3 /app/descompresorp.py /app/comprimido.ec2
+python3 compresor.py text1.txt   
+python3 descompresor.py comprimido.ec2   
+python3 verificador.py text1.txt descomprimido-ec2.txt   
+docker run --rm -it --name mpicont -v "$(pwd)":/app --workdir=/app augustosalazar/un_mpi_image:v4 mpirun -n 3 -oversubscribe --allow-run-as-root python3 /app/descompresorp.py /app/comprimido.ec2   
 python3 verificador.py text1.txt descomprimidop-ec2.txt
